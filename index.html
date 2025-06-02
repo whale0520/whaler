@@ -1,231 +1,111 @@
-
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <title>打地鼠遊戲</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fdf7e4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .login-container, .game-container {
-            background-color: #fff8dc;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .btn {
-            background-color: #ffa500;
-            border: none;
-            padding: 10px 20px;
-            font-size: 18px;
-            color: white;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            background-color: #ff8c00;
-        }
-
-        #score, #timer {
-            font-size: 20px;
-            margin: 10px 0;
-        }
-
-        #holeContainer {
-            display: grid;
-            grid-template-columns: repeat(3, 100px);
-            gap: 15px;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .hole {
-            width: 100px;
-            height: 100px;
-            background-color: #ddd;
-            border-radius: 10px;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .diglett {
-            width: 80px;
-            position: absolute;
-            bottom: -100px;
-            left: 10px;
-            transition: bottom 0.3s ease;
-        }
-
-        .active .diglett {
-            bottom: 0;
-        }
-
-        #restartBtn {
-            margin-top: 20px;
-            display: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2025 弘光科大穿越機研習與競賽</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Noto Sans TC', sans-serif; margin: 0; background: #f7f9fa; color: #222; }
+    header { background: #1a237e; color: #fff; padding: 0; text-align: center; }
+    .banner-img { width: 100%; max-height: 320px; object-fit: cover; }
+    h1 { margin: 0; padding: 24px 0 8px 0; font-size: 2.5rem; }
+    .section { max-width: 900px; margin: 32px auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px #0001; padding: 32px 24px; }
+    .section h2 { color: #1a237e; margin-top: 0; }
+    .timeline { margin: 0 0 24px 0; padding: 0; list-style: none; }
+    .timeline li { margin-bottom: 12px; }
+    .prize-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+    .prize-table th, .prize-table td { border: 1px solid #bbb; padding: 8px 12px; text-align: center; }
+    .prize-table th { background: #e3e6f3; }
+    .signup-links a { display: inline-block; margin: 8px 12px 8px 0; padding: 10px 18px; background: #3949ab; color: #fff; border-radius: 6px; text-decoration: none; font-weight: 700; transition: background 0.2s; }
+    .signup-links a:hover { background: #283593; }
+    .map-img { width: 100%; max-width: 600px; display: block; margin: 24px auto 0 auto; border-radius: 8px; box-shadow: 0 2px 8px #0002; }
+    @media (max-width: 600px) {
+      .section { padding: 18px 4vw; }
+      h1 { font-size: 1.5rem; }
+    }
+  </style>
 </head>
 <body>
-
-<!-- 登入畫面 -->
-<div class="login-container" id="loginContainer">
-    <h2>歡迎來到打地鼠遊戲！</h2>
-    <button id="startGameBtn" class="btn">開始遊戲</button>
-</div>
-
-<!-- 遊戲畫面 -->
-<div class="game-container hidden" id="gameContainer">
-    <h1>打地鼠</h1>
-    <div id="score">分數：0</div>
-    <div id="timer">剩餘時間：20</div>
-
-    <div id="holeContainer">
-        <!-- 9 個地洞 -->
-        <div class="hole" id="hole1"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/50.png" class="diglett"></div>
-        <div class="hole" id="hole2"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/50.png" class="diglett"></div>
-        <div class="hole" id="hole3"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/50.png" class="diglett"></div>
-        <div class="hole" id="hole4"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/50.png" class="diglett"></div>
-        <div class="hole" id="hole5"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/50.png" class="diglett"></div>
-        <div class="hole" id="hole6"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/50.png" class="diglett"></div>
-        <div class="hole" id="hole7"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/50.png" class="diglett"></div>
-        <div class="hole" id="hole8"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/50.png" class="diglett"></div>
-        <div class="hole" id="hole9"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/50.png" class="diglett"></div>
-    
+  <header>
+    <img src="20250524-FPV-Drone.png" alt="2025 FPV Drone Banner" class="banner-img">
+    <h1>2025 弘光科大穿越機研習與競賽</h1>
+    <div style="padding-bottom: 16px;">2025/05/24</div>
+  </header>
+  <div class="section">
+    <h2>一、競賽目的</h2>
+    <p>「2025弘光科大穿越機研習與競賽」旨在結合技職教育4.0的核心理念，強調適性揚材與學用合一，透過創新科技賽事激發學生潛能與職業興趣，培育未來產業所需的實務技能與創意思維。比賽不僅是一場技術較量，更是一個激勵學習、啟發創新的平台，讓學生在探索無人機應用的同時，培養跨領域整合能力，展現技職教育「務實致用、創新引領」的價值與特色。</p>
+  </div>
+  <div class="section">
+    <h2>二、活動時程</h2>
+    <ul class="timeline">
+      <li>08:30-09:00 報到</li>
+      <li>09:00-09:20 開幕與賽事說明</li>
+      <li>09:20-12:00 競賽進行</li>
+      <li>12:00-13:00 午餐休息</li>
+      <li>13:00-16:00 競賽進行</li>
+      <li>16:00-16:30 頒獎與閉幕</li>
+    </ul>
+  </div>
+  <div class="section">
+    <h2>三、賽事獎金</h2>
+    <table class="prize-table">
+      <tr><th>競賽項目</th><th>名次</th><th>獎金</th></tr>
+      <tr><td rowspan="5">穿越無人機闖關競速賽</td><td>第一名</td><td>2000元</td></tr>
+      <tr><td>第二名</td><td>1500元</td></tr>
+      <tr><td>第三名</td><td>1000元</td></tr>
+      <tr><td>第四名</td><td>500元</td></tr>
+      <tr><td>第五名</td><td>300元</td></tr>
+      <tr><td rowspan="5">入門無人機競速闖關賽</td><td>第一名</td><td>2000元</td></tr>
+      <tr><td>第二名</td><td>1500元</td></tr>
+      <tr><td>第三名</td><td>1000元</td></tr>
+      <tr><td>第四名</td><td>500元</td></tr>
+      <tr><td>第五名</td><td>300元</td></tr>
+      <tr><td rowspan="5">入門無人機團體解題競速闖關賽</td><td>第一名</td><td>2200元</td></tr>
+      <tr><td>第二名</td><td>1600元</td></tr>
+      <tr><td>第三名</td><td>1100元</td></tr>
+      <tr><td>第四名</td><td>600元</td></tr>
+      <tr><td>第五名</td><td>400元</td></tr>
+    </table>
+  </div>
+  <div class="section">
+    <h2>四、報名</h2>
+    <div class="signup-links">
+      <a href="#signup1">競賽一：穿越無人機闖關競速賽</a>
+      <a href="#signup2">競賽二：入門無人機競速闖關賽</a>
+      <a href="#signup3">競賽三：入門無人機團體解題競速闖關賽</a>
     </div>
-
-    <div id="finalScoreBoard" style="display:none; margin-top: 20px;">
-        <h2>遊戲結束！</h2>
-        <p id="finalScoreText">你打中了 0 隻地鼠！</p>
-        <h3>排行榜（前 5 名）</h3>
-        <ol id="leaderboard"></ol>
+  </div>
+  <div class="section">
+    <h2>五、競賽場地與交通資訊</h2>
+    <p>競賽場地於本校後方的智慧科技大樓七樓無人機教育中心</p>
+    <div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 32px;">
+      <div style="flex: 1 1 280px; min-width: 220px; text-align: center;">
+        <img src="弘光校區平面圖.jpg" alt="弘光校園平面圖" class="map-img" style="margin: 0 auto 8px auto;">
+        <div style="font-size: 1.1em; color: #333; margin-top: 4px;">學校平面圖</div>
+      </div>
+      <ul style="flex: 2 1 320px; min-width: 220px; margin: 0;">
+        <li>GPS座標：24.21612232201235, 120.58396194693957</li>
+        <li>搭公車：請坐台中市BRT，弘光科大下車，往本校櫻花大道向上走，通過噴水池，走至本校智慧科技大樓。</li>
+        <li>騎機車：請從弘光大門(往沙鹿方向)下一個紅綠燈右轉，一直騎到底右轉，停入本校機車停車場，再往右側下方走至本校智慧科技大樓。</li>
+        <li>開車：入校門後，往本校櫻花大道向上開，繞過本校智慧科技大樓，停在本校操場，往操場另一側走至本校智慧科技大樓。</li>
+      </ul>
     </div>
-
-    <button id="restartBtn" class="btn">再玩一次</button>
-
-</div>
-
-<script>
-    const startBtn = document.getElementById("startGameBtn");
-    const loginContainer = document.getElementById("loginContainer");
-    const gameContainer = document.getElementById("gameContainer");
-    const holes = document.querySelectorAll(".hole");
-    const scoreDisplay = document.getElementById("score");
-    const timerDisplay = document.getElementById("timer");
-    const restartBtn = document.getElementById("restartBtn");
-
-    let score = 0;
-    let timeLeft = 20;
-    let gameInterval;
-    let moleInterval;
-    let activeHole = null;
-
-    startBtn.addEventListener("click", () => {
-        loginContainer.classList.add("hidden");
-        gameContainer.classList.remove("hidden");
-        startGame();
-    });
-
-    restartBtn.addEventListener("click", () => {
-        restartBtn.style.display = "none";
-        score = 0;
-        timeLeft = 20;
-        scoreDisplay.textContent = "分數：0";
-        timerDisplay.textContent = "剩餘時間：20";
-        startGame();
-    });
-
-    function startGame() {
-        gameInterval = setInterval(updateTimer, 1000);
-        moleInterval = setInterval(showMole, 800);
-        holes.forEach(hole => {
-            hole.addEventListener("click", () => {
-                if (hole === activeHole && hole.classList.contains("active")) {
-                    score++;
-                    scoreDisplay.textContent = `分數：${score}`;
-                    hole.classList.remove("active");
-                    activeHole = null;
-                }
-            });
-        });
-    }
-
-    function updateTimer() {
-        timeLeft--;
-        timerDisplay.textContent = `剩餘時間：${timeLeft}`;
-        if (timeLeft <= 0) {
-            clearInterval(gameInterval);
-            clearInterval(moleInterval);
-            if (activeHole) activeHole.classList.remove("active");
-            timerDisplay.textContent = "時間到！";
-            restartBtn.style.display = "inline-block";
-        }
-    }
-
-    function showMole() {
-        if (activeHole) activeHole.classList.remove("active");
-        const index = Math.floor(Math.random() * holes.length);
-        activeHole = holes[index];
-        activeHole.classList.add("active");
-    }
-
-    const finalScoreBoard = document.getElementById("finalScoreBoard");
-    const finalScoreText = document.getElementById("finalScoreText");
-    const leaderboard = document.getElementById("leaderboard");
-
-    function updateLeaderboard(newScore) {
-        let scores = JSON.parse(localStorage.getItem("scores")) || [];
-        scores.push(newScore);
-        scores.sort((a, b) => b - a);
-        scores = scores.slice(0, 5);
-        localStorage.setItem("scores", JSON.stringify(scores));
-
-        leaderboard.innerHTML = "";
-        scores.forEach((score, index) => {
-            const li = document.createElement("li");
-            li.textContent = `第 ${index + 1} 名：${score} 分`;
-            leaderboard.appendChild(li);
-        });
-    }
-
-    function endGame() {
-        clearInterval(gameInterval);
-        clearInterval(moleInterval);
-        if (activeHole) activeHole.classList.remove("active");
-        timerDisplay.textContent = "時間到！";
-        finalScoreText.textContent = `你打中了 ${score} 隻地鼠！`;
-        updateLeaderboard(score);
-        finalScoreBoard.style.display = "block";
-        restartBtn.style.display = "inline-block";
-    }
-
-    function updateTimer() {
-        timeLeft--;
-        timerDisplay.textContent = `剩餘時間：${timeLeft}`;
-        if (timeLeft <= 0) {
-            endGame();
-        }
-    }
-</script>
-
-
+  </div>
+  <div class="section" id="signup1">
+    <h2>競賽一：穿越無人機闖關競速賽報名表單</h2>
+    <a href="#" style="display: inline-block; margin-top: 12px; padding: 10px 20px; background: #3949ab; color: #fff; border-radius: 6px; text-decoration: none; font-weight: 700; transition: background 0.2s;">點擊報名</a>
+  </div>
+  <div class="section" id="signup2">
+    <h2>競賽二：入門無人機競速闖關賽報名表單</h2>
+    <a href="#" style="display: inline-block; margin-top: 12px; padding: 10px 20px; background: #3949ab; color: #fff; border-radius: 6px; text-decoration: none; font-weight: 700; transition: background 0.2s;">點擊報名</a>
+  </div>
+  <div class="section" id="signup3">
+    <h2>競賽三：入門無人機團體解題競速闖關賽報名表單</h2>
+    <a href="#" style="display: inline-block; margin-top: 12px; padding: 10px 20px; background: #3949ab; color: #fff; border-radius: 6px; text-decoration: none; font-weight: 700; transition: background 0.2s;">點擊報名</a>
+  </div>
+  <footer style="text-align:center;color:#888;padding:24px 0 12px 0;font-size:0.95em;">
+    &copy; 2025 弘光科技大學 無人機教育中心
+  </footer>
 </body>
-</html>
+</html> 
